@@ -1,0 +1,11 @@
+C:\Users\Walter\RewardProgram\bin\Debug\netcoreapp2.2\RewardProgram.deps.json
+C:\Users\Walter\RewardProgram\bin\Debug\netcoreapp2.2\RewardProgram.runtimeconfig.json
+C:\Users\Walter\RewardProgram\bin\Debug\netcoreapp2.2\RewardProgram.runtimeconfig.dev.json
+C:\Users\Walter\RewardProgram\bin\Debug\netcoreapp2.2\RewardProgram.dll
+C:\Users\Walter\RewardProgram\bin\Debug\netcoreapp2.2\RewardProgram.pdb
+C:\Users\Walter\RewardProgram\obj\Debug\netcoreapp2.2\RewardProgram.csprojAssemblyReference.cache
+C:\Users\Walter\RewardProgram\obj\Debug\netcoreapp2.2\RewardProgram.csproj.CoreCompileInputs.cache
+C:\Users\Walter\RewardProgram\obj\Debug\netcoreapp2.2\RewardProgram.AssemblyInfoInputs.cache
+C:\Users\Walter\RewardProgram\obj\Debug\netcoreapp2.2\RewardProgram.AssemblyInfo.cs
+C:\Users\Walter\RewardProgram\obj\Debug\netcoreapp2.2\RewardProgram.dll
+C:\Users\Walter\RewardProgram\obj\Debug\netcoreapp2.2\RewardProgram.pdb
