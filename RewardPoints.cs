@@ -1,9 +1,7 @@
 using System;
 using System.Data;
 
-public class RewardPoints{
-
-    
+public class RewardPoints{    
     struct Promotions{
         public int Id{get;set;}
         public decimal ObjectiveAmount{get;set;}
@@ -55,11 +53,20 @@ public class RewardPoints{
         int prevTransMonth = 0;
         int prevTransYear = 0;
 
+        string curCustomer = string.Empty;
+        string prevCustomer = string.Empty;
+
         for(int x = 0; x < transCount; x++)
         {
+            curCustomer = dt.Rows[x]["CCNumber"].ToString();            
             dtTrans = (DateTime)dt.Rows[x]["transDate"];
             transAmt = (decimal)dt.Rows[x]["transAmount"];
             rewardPoints = 0;
+
+            if(curCustomer != prevCustomer){                
+                monthlyRewardPoints = 0;
+                totalRewardPoints = 0;
+            }
 
             // promo 1
             if(!IsPromoExpired(dtTrans, promoFifty)){
@@ -82,8 +89,9 @@ public class RewardPoints{
             prevTransMonth = dtTrans.Month;
             prevTransYear = dtTrans.Year;
 
+            prevCustomer = curCustomer;
             // test
-            DisplayText(dtTrans, transAmt, rewardPoints, monthlyRewardPoints, totalRewardPoints);
+            DisplayText(curCustomer, dtTrans, transAmt, rewardPoints, monthlyRewardPoints, totalRewardPoints);
         }
     }
     private bool IsPromoExpired(DateTime dtTrans, Promotions promo){
@@ -140,8 +148,8 @@ public class RewardPoints{
     private int PointsEarned(decimal transAmount, Promotions promo){
         return 0;
     }
-    public void DisplayText(DateTime TransDate, decimal TransAmount, int RewardPoints, int monthlyRewardPoints, int totalRewardPoints){
-        Console.WriteLine($"Transaction Date is {TransDate}; Amount ${TransAmount}; Reward Points {RewardPoints}; Monthly Points {monthlyRewardPoints}; Total Points {totalRewardPoints}");        
+    public void DisplayText(string CCard, DateTime TransDate, decimal TransAmount, int RewardPoints, int monthlyRewardPoints, int totalRewardPoints){
+        Console.WriteLine($"CC#: {CCard}; Tran Date {TransDate}; Amount ${TransAmount}; Reward Points {RewardPoints}; Monthly Points {monthlyRewardPoints}; Total Points {totalRewardPoints}");        
     }
     
     private void CreateTransactionsTable() {
@@ -155,6 +163,12 @@ public class RewardPoints{
         dtCol.Caption = "Trans Id";
         dtCol.ReadOnly = false;
         dtCol.Unique = true;
+        TransTable.Columns.Add(dtCol);
+
+        dtCol = new DataColumn();
+        dtCol.DataType = typeof(string);
+        dtCol.ColumnName = "CCNumber";
+        dtCol.Caption = "Credit Card #";
         TransTable.Columns.Add(dtCol);
 
         dtCol = new DataColumn();
@@ -179,6 +193,7 @@ public class RewardPoints{
         // record 1
         dtRow = TransTable.NewRow();
         dtRow["id"] = 101;
+        dtRow["CCNumber"] = "1234567898765432";
         dtRow["transDate"] = DateTime.Parse("01/01/2020 11:00:05.009");
         dtRow["transAmount"] = 120.00M;
         TransTable.Rows.Add(dtRow);
@@ -186,6 +201,7 @@ public class RewardPoints{
         // record 2
         dtRow = TransTable.NewRow();
         dtRow["id"] = 102;
+        dtRow["CCNumber"] = "1234567898765432";
         dtRow["transDate"] = DateTime.Parse("01/21/2020 13:00:33.001");
         dtRow["transAmount"] = 99.51M;
         TransTable.Rows.Add(dtRow);
@@ -193,6 +209,7 @@ public class RewardPoints{
         // record 3
         dtRow = TransTable.NewRow();
         dtRow["id"] = 103;
+        dtRow["CCNumber"] = "1234567898765432";
         dtRow["transDate"] = DateTime.Parse("02/03/2020 14:02:22.003");
         dtRow["transAmount"] = 100.49M;
         TransTable.Rows.Add(dtRow);
@@ -200,6 +217,7 @@ public class RewardPoints{
         // record 4
         dtRow = TransTable.NewRow();
         dtRow["id"] = 104;
+        dtRow["CCNumber"] = "1234567898765432";
         dtRow["transDate"] = DateTime.Parse("03/02/2020 15:15:00.112");
         dtRow["transAmount"] = 50.01M;
         TransTable.Rows.Add(dtRow);
@@ -207,6 +225,7 @@ public class RewardPoints{
         // record 5
         dtRow = TransTable.NewRow();
         dtRow["id"] = 105;
+        dtRow["CCNumber"] = "1234567898765432";
         dtRow["transDate"] = DateTime.Parse("03/03/2020 18:18:23.118");
         dtRow["transAmount"] = 49.51M;
         TransTable.Rows.Add(dtRow);
@@ -214,6 +233,7 @@ public class RewardPoints{
         // record 6
         dtRow = TransTable.NewRow();
         dtRow["id"] = 106;
+        dtRow["CCNumber"] = "1234567898765432";
         dtRow["transDate"] = DateTime.Parse("03/31/2020 23:59:59.999");
         dtRow["transAmount"] = 89.50M;
         TransTable.Rows.Add(dtRow);
@@ -221,6 +241,7 @@ public class RewardPoints{
         // record 7
         dtRow = TransTable.NewRow();
         dtRow["id"] = 107;
+        dtRow["CCNumber"] = "1234567898765432";
         dtRow["transDate"] = DateTime.Parse("04/01/2020 00:00:00.001");
         dtRow["transAmount"] = 59.30M;
         TransTable.Rows.Add(dtRow);
@@ -228,8 +249,41 @@ public class RewardPoints{
         // record 8
         dtRow = TransTable.NewRow();
         dtRow["id"] = 108;
+        dtRow["CCNumber"] = "1234567898765432";
         dtRow["transDate"] = DateTime.Parse("04/03/2020 15:02:00.123");
         dtRow["transAmount"] = 109.30M;
+        TransTable.Rows.Add(dtRow);
+
+        // record 9
+        dtRow = TransTable.NewRow();
+        dtRow["id"] = 109;
+        dtRow["CCNumber"] = "2234222298765423";
+        dtRow["transDate"] = DateTime.Parse("01/02/2020 11:33:00.789");
+        dtRow["transAmount"] = 87.30M;
+        TransTable.Rows.Add(dtRow);
+
+        // record 10
+        dtRow = TransTable.NewRow();
+        dtRow["id"] = 110;
+        dtRow["CCNumber"] = "2234222298765423";
+        dtRow["transDate"] = DateTime.Parse("01/05/2020 13:08:01.202");
+        dtRow["transAmount"] = 101.00M;
+        TransTable.Rows.Add(dtRow);
+
+        // record 11
+        dtRow = TransTable.NewRow();
+        dtRow["id"] = 111;
+        dtRow["CCNumber"] = "3334222298765444";
+        dtRow["transDate"] = DateTime.Parse("02/12/2020 17:20:01.321");
+        dtRow["transAmount"] = 50.00M;
+        TransTable.Rows.Add(dtRow);
+
+        // record 11
+        dtRow = TransTable.NewRow();
+        dtRow["id"] = 112;
+        dtRow["CCNumber"] = "3334222298765444";
+        dtRow["transDate"] = DateTime.Parse("02/21/2020 09:18:05.124");
+        dtRow["transAmount"] = 100.00M;
         TransTable.Rows.Add(dtRow);
 
         TransTable.AcceptChanges();
